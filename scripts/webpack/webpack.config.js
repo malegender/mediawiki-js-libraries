@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserJSPlugin = require('terser-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const entry = require('./entry');
 const { MODULES_PATH, VENDORS_NAME, RUNTIME_NAME } = require('../constants');
@@ -31,15 +32,20 @@ const config = {
     minimize: true,
     minimizer: [new CssMinimizerPlugin(), new TerserJSPlugin()]
   },
-  plugins: [new MiniCssExtractPlugin({
-    filename: "[name].css",
-  })],
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({ filename: "[name].css" })
+  ],
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
       },
       {
         test: /\.css$/i,

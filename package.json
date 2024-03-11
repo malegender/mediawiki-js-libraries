@@ -26,6 +26,8 @@
 		"style-loader": "^3.3.4",
 		"stylelint-config-wikimedia": "0.14.0",
 		"terser-webpack-plugin": "^5.3.10",
+		"vue-loader": "^17.4.2",
+		"vue-template-compiler": "^2.7.16",
 		"webpack": "^5.90.2"
 	},
 	"eslintIgnore": [
