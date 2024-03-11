@@ -1,0 +1,35 @@
+{
+    "name": "JSLibraries",
+    "author": [
+        "Sergey Aleksandrov"
+    ],
+    "url": "https://github.com/malegender/mediawiki-js-libraries",
+    "descriptionmsg": "js-libraries-desc",
+    "license-name": "GPL-2.0-or-later",
+    "type": "other",
+    "requires": {
+        "MediaWiki": ">= 1.40.0"
+    },
+    "MessagesDirs": {
+        "JSLibraries": [
+            "i18n"
+        ]
+    },
+    "AutoloadNamespaces": {
+        "JSLibraries\\": "includes/"
+    },
+    "Hooks": {
+        "BeforePageDisplay": "handleHooks"
+    },
+    "HookHandlers": {
+        "handleHooks": {
+            "class": "JSLibraries\\Hooks"
+        }
+    },
+    "ResourceFileModulePaths": {
+        "localBasePath": "modules",
+        "remoteExtPath": "JSLibraries/modules"
+    },
+    "ResourceModules": {},
+    "manifest_version": 2
+}

@@ -1,0 +1,35 @@
+{
+	"name": "js-libraries",
+	"private": true,
+	"scripts": {
+		"affix": "npm run build && npm run extension",
+		"build": "node ./scripts/webpack/run.js --force",
+		"extension": "node ./scripts/extension.js",
+		"clean": "node ./scripts/clean.js",
+		"test": "grunt test"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.23.9",
+		"@babel/preset-env": "^7.23.9",
+		"api-testing": "1.5.0",
+		"babel-loader": "^9.1.3",
+		"css-loader": "^6.10.0",
+		"css-minimizer-webpack-plugin": "^6.0.0",
+		"eslint-config-wikimedia": "0.25.0",
+		"grunt": "1.6.1",
+		"grunt-banana-checker": "0.10.0",
+		"grunt-eslint": "24.0.1",
+		"grunt-stylelint": "0.18.0",
+		"less": "^4.2.0",
+		"less-loader": "^12.2.0",
+		"mini-css-extract-plugin": "^2.8.0",
+		"style-loader": "^3.3.4",
+		"stylelint-config-wikimedia": "0.14.0",
+		"terser-webpack-plugin": "^5.3.10",
+		"webpack": "^5.90.2"
+	},
+	"eslintIgnore": [
+		"coverage",
+		"vendor"
+	]
+}
