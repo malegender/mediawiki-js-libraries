@@ -10,6 +10,8 @@ module.exports.EXTENSION_NAME = EXTENSION_NAME;
 
 module.exports.ABSOLUTE_PATH = ABSOLUTE_PATH;
 
+module.exports.SCRIPTS_PATH = path.join(ABSOLUTE_PATH, 'scripts');
+
 module.exports.MODULES_DIR = MODULES_DIR;
 
 module.exports.MODULES_PATH = path.join(ABSOLUTE_PATH, MODULES_DIR);
@@ -17,6 +19,8 @@ module.exports.MODULES_PATH = path.join(ABSOLUTE_PATH, MODULES_DIR);
 module.exports.RESOURCES_PATH = RESOURCES_PATH;
 
 module.exports.EXPOSES_PATH = path.join(RESOURCES_PATH, 'exposes');
+
+module.exports.SRC_PATH = path.join(RESOURCES_PATH, 'src');
 
 const PREFIX_MODULE  = getParam('prefix', 'ext.');
 const SUFFIX_MODULE  = getParam('suffix', '');
