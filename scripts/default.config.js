@@ -1,0 +1,3 @@
+module.exports = {
+  useMediawikiVue: true
+}
