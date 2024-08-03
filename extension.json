@@ -31,20 +31,20 @@
         "remoteExtPath": "JSLibraries/modules"
     },
     "ResourceModules": {
-        "ext.JSLibraries.runtime": {
+        "ext.JSLibraries.ModuleComponent.VueComponent": {
             "packageFiles": [
-                "runtime.js"
-            ],
-            "styles": []
-        },
-        "ext.JSLibraries.test": {
-            "packageFiles": [
-                "test.js"
+                "ModuleComponent/VueComponent.js"
             ],
             "styles": [],
             "dependencies": [
                 "ext.JSLibraries.runtime"
             ]
+        },
+        "ext.JSLibraries.runtime": {
+            "packageFiles": [
+                "runtime.js"
+            ],
+            "styles": []
         },
         "ext.JSLibraries.vendors": {
             "packageFiles": [
