@@ -38,6 +38,7 @@ module.exports = {
       '@src': SRC_PATH,
       vue$: path.join(SCRIPTS_PATH, 'vue', vueFile),
     },
+    extensions: ['.js', '.vue', '.json', '.wasm'],
   },
   optimization: {
     runtimeChunk: {

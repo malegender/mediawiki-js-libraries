@@ -13,5 +13,5 @@ Before you can start, you need:
 ## Contributing
 
 ```bash
-git clone https://github.com/malegender/mediawiki-js-npm.git
+git clone https://github.com/malegender/mediawiki-js-libraries.git
 ```

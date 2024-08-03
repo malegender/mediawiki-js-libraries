@@ -3,8 +3,13 @@ const logger = require('../utils/logger');
 const { getPathsFiles } = require('../utils/files');
 const { MODULES_PATH } = require('../constants');
 
-module.exports = (err, stats) => {
+module.exports = (errors, stats) => {
   process.stdout.write(stats.toString() + "\n");
+
+  if (errors || stats.hasErrors()) {
+    process.exit(-1);
+    return;
+  }
 
   getPathsFiles(MODULES_PATH, ['js', 'css']).forEach((pathFile) => {
     const cssRegexp = /\.(css|less)\.css/;
