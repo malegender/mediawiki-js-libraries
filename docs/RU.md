@@ -397,7 +397,7 @@ module.exports = exports = {
       ],
       "dependencies": [
         "vue",
-        "ext.JSLibraries.Module.VueComponent"
+        "ext.JSLibraries.DynamicModule.VueComponent"
       ]
     }
   }
@@ -407,7 +407,7 @@ module.exports = exports = {
 ```js
   const Vue = require("vue");
   const App = require("./App.vue");
-  const ModuleVueComponent = require("ext.JSLibraries.Module.VueComponent").default;
+  const ModuleVueComponent = require("ext.JSLibraries.DynamicModule.VueComponent").default;
   const app = Vue.createMwApp(App);
   
   app.component('module-component', ModuleVueComponent);
