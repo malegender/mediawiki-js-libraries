@@ -116,7 +116,7 @@ __Важно!__ _Необходимо подключать к каждому м�
 | Название          | По умолчанию | Описание |
 | ----------------- | ------------ | -------- |
 | `$wgJSLibrariesLoader` | `false`       | Включает [функцию парсера jslibrariesloader](#jslibrariesloader) |
-| `JSLibrariesLoaderPostfix` | `.wikitext` | [Постфикс](#jslibrariesloader-restriction) для наименования модуля подключаемого через [функцию парсера jslibrariesloader](#jslibrariesloader) |
+| `$wgJSLibrariesLoaderPostfix` | `.wikitext` | [Постфикс](#jslibrariesloader-restriction) для наименования модуля подключаемого через [функцию парсера jslibrariesloader](#jslibrariesloader) |
 
 ### <a id="build-settings">Настройки сборки</a>
 
