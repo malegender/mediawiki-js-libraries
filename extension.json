@@ -15,11 +15,25 @@
             "i18n"
         ]
     },
+    "ExtensionMessagesFiles": {
+        "JSLibrariesMagic": "JSLibraries.i18n.php"
+    },
+    "config": {
+        "JSLibrariesLoader": {
+            "description": "Enable parser function jslibrariesloader",
+            "value": false
+        },
+        "JSLibrariesLoaderPostfix": {
+            "description": "This is the postfix of the module name for parser function jslibrariesloader",
+            "value": ".wikitext"
+        }
+    },
     "AutoloadNamespaces": {
         "JSLibraries\\": "includes/"
     },
     "Hooks": {
-        "BeforePageDisplay": "handleHooks"
+        "BeforePageDisplay": "handleHooks",
+        "ParserFirstCallInit": "handleHooks"
     },
     "HookHandlers": {
         "handleHooks": {
