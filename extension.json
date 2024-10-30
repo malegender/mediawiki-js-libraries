@@ -45,12 +45,6 @@
                 "runtime.js"
             ],
             "styles": []
-        },
-        "ext.JSLibraries.vendors": {
-            "packageFiles": [
-                "vendors.js"
-            ],
-            "styles": []
         }
     },
     "manifest_version": 2
