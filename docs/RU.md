@@ -3,7 +3,8 @@
   - [Структура каталогов](#directory-structure)
   - [Структура файлов модулей](#modules-structure)
   - [Структура ResourceModules](#resource-modules-structure)
-  - [Настройки](#settings)
+  - [Настройки расширения](#extension-settings)
+  - [Настройки сборки](#build-settings)
 - [Использование](#usage)
   - [Ограничения](#restriction)
   - [Рабочие сценарии](#scripts)
@@ -14,7 +15,11 @@
   - [Описание](#module-component-description)
   - [Использование](#module-component-usage)
   - [Api](#module-component-api)
-  - [Events](#module-component-events)
+- [Функция парсера для подключения модуля](#jslibrariesloader)
+  - [Описание и мотивация](#jslibrariesloader-description)
+  - [Использование](#jslibrariesloader-usage)
+  - [Ограничения](#jslibrariesloader-restriction)
+  - [Пример подключения Vue приложения в викиразметке](#jslibrariesloader-example)
 
 ## <a name="description">Описание</a>
 
@@ -106,11 +111,20 @@ __Важно!__ _Необходимо подключать к каждому м�
   }
 }
 ```
-### <a id="settings">Настройки</a>
+### <a id="extension-settings">Настройки расширения</a>
+
+| Название          | По умолчанию | Описание |
+| ----------------- | ------------ | -------- |
+| `$wgJSLibrariesLoader` | `false`       | Включает [функцию парсера jslibrariesloader](#jslibrariesloader) |
+| `$wgJSLibrariesLoaderPostfix` | `.wikitext` | [Постфикс](#jslibrariesloader-restriction) для наименования модуля подключаемого через [функцию парсера jslibrariesloader](#jslibrariesloader) |
+
+### <a id="build-settings">Настройки сборки</a>
 
 Изменить настройки сборки можно в файле `jsl.config.js`
 
-* `useMediawikiVue` - использовать Vue из Mediawiki. По умолчанию - `true`.
+| Название          | По умолчанию | Описание |
+| ----------------- | ------------ | -------- |
+| `useMediawikiVue` | `true`       | Если включено, то использует экземпляр Vue из Mediawiki |
 
 ## <a id="usage">Использование</a>
 
@@ -178,8 +192,8 @@ export const getUser = () => mw.user.isAnon() ? mw.message('js-libraries-strange
                   └── hello.js
 ```
 ```js
-export { default } from '../../src/hello/say-hello';
-export * from '../../src/hello/user';
+export { default } from '@src/hello/say-hello';
+export * from '@src/hello/user';
 ```
 Выполним `npm run affix`.
 ```js
@@ -435,10 +449,84 @@ module.exports = exports = {
 </script>
 ```
 Итогом будет `Скажи миру Привет!`
-### <a id="module-component-api">API ModuleVueComponent</a>
+### <a id="module-component-api">API компонента</a>
 Компонент основан на использовании [асинхронных компонентов Vue](https://ru.vuejs.org/guide/components/async).    
 Использует [компонент Suspense](https://vuejs.org/guide/built-ins/suspense.html).
 Доступны параметры и события [API Suspense](https://vuejs.org/api/built-in-components#suspense).
 
-#### <a id="module-component-events">Events</a>
+#### Events
 @fail - вызывается, если загрузка компонента завершилась ошибкой.
+
+## <a id="jslibrariesloader">Функция парсера для подключения модуля</a>
+
+### <a id="jslibrariesloader-description">Описание и мотивация</a>
+Иногда бывает сложно вставить скрипт на отдельную страницу или в викитекст.  
+Функция парсера `jslibrariesloader` добавляет на страницу указанный модуль.
+
+### <a id="jslibrariesloader-usage">Использование</a>
+Синтаксис вызова в викитесте `{{#jslibrariesloader:modulename}}` или `{{#jslibrariesloader:modulename.style}}`.    
+Можно указать несколько разных модулей `{{#jslibrariesloader:modulename|modulename.style|modulename2}}`.  
+__Важно!__ _Если указан суффикс `.style`, то подключение будет через `ParserOutput::addModuleStyles`, иначе `ParserOutput::addModules`._  
+
+### <a id="jslibrariesloader-restriction">Ограничения</a>
+Для безопасности, эта функция может подключать только модули с определенным постфиксом в имени.
+Постфикс настраивается параметром `$wgJSLibrariesLoaderPostfix`. 
+
+### <a id="jslibrariesloader-example">Пример подключения Vue приложения в викиразметке</a>
+
+В произвольном расширении создадми Vue приложение
+```bash
+├── resources
+      ├── App.vue
+      └── init.js
+├── extension.json
+```
+Содержимое `App.vue`:
+```vue
+<template>
+	<div>Hello World!</div>
+</template>
+
+<script>
+export default {
+	name: "HelloWorld",
+}
+</script>
+```
+Содержимое `init.js`:
+```js
+const Vue = require('vue');
+const App = require('./App.vue');
+const app = Vue.createMwApp(App);
+
+app.mount('#hello-world');
+```
+Регистрация в файле `extension.json`:
+
+```json
+{
+  "ResourceModules": {
+    "ext.hello.world.wikitext": {
+      "packageFiles": [
+        "resources/App.js",
+        "resources/init.js"
+      ]
+    }
+  }
+}
+```
+__Важно!__ _Название модуля ДОЛЖНО содержать [постфикс](#jslibrariesloader-description) из [настройки](#extension-settings) `$wgJSLibrariesLoaderPostfix`. В примере `.wikitext`._
+
+Создаем страницу шаблон `/wiki/Шаблон:Подключение_vue_приложения`:
+```
+<div {{#if:{{{id|}}}|id="{{{id}}}"|}} {{#if:{{{class|}}}|class="{{{class}}}"|}}></div>
+{{#jslibrariesloader:{{{module}}}}}
+```
+Размещаем на нужную страницу в викитексте:
+```
+{{Подключение vue приложения|id=hello-world|module=ext.hello.world}}
+```
+__Важно!__ _[Постфикс](#jslibrariesloader-description) не используем в викитексте. Т.е. `ext.hello.world` НЕ `ext.hello.world.wikitext`._  
+__Важно!__ _Необходимо указывать id в шаблоне, такой же как при монтировании vue приложения. В примере `hello-world`._
+
+Результат на странице: `Hello world!`.
